@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useTodoStore } from '~/stores/todoStore'
 
 // Reactive variables to control the visibility of the input field and store input values
@@ -62,6 +62,12 @@ const handleKeypress = (event: KeyboardEvent) => {
     addOrUpdateTodo()
   }
 }
+
+// Load todos from local storage when component is mounted
+onMounted(() => {
+  const todoStore = useTodoStore()
+  todoStore.loadTodos()
+})
 
 // Method to prepare editing a todo item
 const prepareEditTodo = (index: number) => {

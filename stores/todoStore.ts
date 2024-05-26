@@ -1,19 +1,30 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 export const useTodoStore = defineStore('todoStore', {
   state: () => ({
-    todos: [] as { item: string, priority: string }[]
+    todos: JSON.parse(localStorage.getItem('todos') || '[]') as { item: string, priority: string }[]
   }),
   actions: {
-    // 저장 기능 추가 
     addTodo(todo: { item: string, priority: string }) {
-      this.todos.push(todo);
+      this.todos.push(todo)
+      this.saveTodos()
     },
     deleteTodo(index: number) {
       this.todos.splice(index, 1)
+      this.saveTodos()
     },
     updateTodo(index: number, updatedTodo: { item: string, priority: string }) {
       this.todos[index] = updatedTodo
+      this.saveTodos()
+    },
+    saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(this.todos))
+    },
+    loadTodos() {
+      const todos = localStorage.getItem('todos')
+      if (todos) {
+        this.todos = JSON.parse(todos)
+      }
     }
   }
-});
+})
