@@ -1,26 +1,59 @@
-# Nuxt 3 Minimal Starter
+# TODO List Application
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 개요
+이 프로젝트는 Vue 3.0과 Nuxt.js를 사용하여 개발된 TODO 리스트 애플리케이션입니다. 이 애플리케이션은 사용자에게 할 일을 추가, 수정, 삭제할 수 있는 기능을 제공하며, 로컬 스토리지를 사용하여 데이터를 영구적으로 저장합니다. 또한, 반응형 디자인을 채택하여 다양한 디바이스에서 최적의 사용자 경험을 제공합니다.
 
-## Setup
+## 기능
+- 할 일 추가, 수정, 삭제
+- 할 일 완료 표시
+- 할 일 필터링 (전체, 완료, 미완료)
+- 할 일 검색
+- 로컬 스토리지에 데이터 저장
+- 반응형 디자인
 
-Make sure to install the dependencies:
+## 기술 스택
+- [Vue 3.0](https://vuejs.org/)
+- [Nuxt.js](https://nuxtjs.org/)
+- [Pinia](https://pinia.vuejs.org/) (상태 관리)
+- [Vue Router](https://router.vuejs.org/) (라우팅)
+- [Sass](https://sass-lang.com/) (스타일링)
+- [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) (데이터 저장)
 
-```bash
-# npm
-npm install
+## 프로젝트 설정
 
-# pnpm
-pnpm install
+### 요구 사항
+- [Node.js](https://nodejs.org/) (버전 14 이상)
+- npm 또는 yarn
 
-# yarn
-yarn install
+### 설치
+1. 리포지토리를 클론합니다.
+    ```bash
+    git clone https://github.com/woori3104/TodoTracker.git
+    ```
 
-# bun
-bun install
-```
+2. 의존성을 설치합니다.
+    ```bash
+    npm install
+    # 또는
+    yarn install
+    ```
 
-## Development Server
+### 개발 서버 실행
+  ```bash
+  # npm
+  npm install
+
+  # pnpm
+  pnpm install
+
+  # yarn
+  yarn install
+
+  # bun
+  bun install
+  ```
+
+## 개발 서버 
 
 Start the development server on `http://localhost:3000`:
 
