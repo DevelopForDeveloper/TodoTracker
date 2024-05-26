@@ -1,0 +1,8 @@
+{
+  "vetur.validation.template": false,
+  "vetur.experimental.templateInterpolationService": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "vetur.useWorkspaceDependencies": true,
+  "vetur.languageFeatures.updateImportOnFileMove.enabled": true,
+  "vetur.format.options.tabSize": 2
+}
