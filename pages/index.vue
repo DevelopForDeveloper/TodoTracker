@@ -16,22 +16,4 @@ const navigateToABV = () => {
 
 <style>
 
-.btn-container {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-}
-
-.btn-start {
-  border-radius: 5%;
-  width: 200px;
-  height: 60px;
-  font-size: 24px;
-  background-color: #a5c4cc;
-  color: #4d769e;
-  font-family: "UhBeeMiMi";
-}
-/*스타일링. */
 </style>
