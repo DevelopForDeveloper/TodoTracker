@@ -38,13 +38,11 @@ const addOrUpdateTodo = () => {
   toggleInput()
 }
 
-// Pure function to add a todo
 const addTodo = (todo: { item: string, priority: string }) => {
   const todoStore = useTodoStore()
   todoStore.addTodo(todo)
 }
 
-// Pure function to update a todo
 const updateTodo = (index: number, updatedTodo: { item: string, priority: string }) => {
   const todoStore = useTodoStore()
   todoStore.updateTodo(index, updatedTodo)

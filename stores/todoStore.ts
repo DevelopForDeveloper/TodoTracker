@@ -6,6 +6,10 @@ export const useTodoStore = defineStore('todoStore', {
   }),
   actions: {
     addTodo(todo: { item: string, priority: string }) {
+      if (this.isDuplicate(todo.item)) {
+        alert('This item already exists.');
+        return;
+      }
       this.todos.push(todo)
       this.saveTodos()
     },
@@ -14,6 +18,10 @@ export const useTodoStore = defineStore('todoStore', {
       this.saveTodos()
     },
     updateTodo(index: number, updatedTodo: { item: string, priority: string }) {
+      if (this.todos[index].item !== updatedTodo.item && this.isDuplicate(updatedTodo.item)) {
+        alert('This item already exists.');
+        return;
+      }
       this.todos[index] = updatedTodo
       this.saveTodos()
     },
@@ -25,6 +33,9 @@ export const useTodoStore = defineStore('todoStore', {
       if (todos) {
         this.todos = JSON.parse(todos)
       }
-    }
+    },
+    isDuplicate(item: string) {
+      return this.todos.some(todo => todo.item === item);
+    },
   }
 })
