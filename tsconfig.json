@@ -4,6 +4,10 @@
     "baseUrl": ".",
     "paths": {
       "vue-router": ["node_modules/vue-router"]
-    }
+    },
+    "types": [
+      // ...
+      "@pinia/nuxt"
+    ]
   }
 }
