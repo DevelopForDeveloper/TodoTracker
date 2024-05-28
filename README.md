@@ -18,7 +18,6 @@
 - [ ] 로그인 기능 추가
 - [ ] 파이어베이스로 데이터베이스 기능 추가
 
-
 ## 기술 스택
 - [Vue 3.0](https://vuejs.org/)
 - [Nuxt.js](https://nuxtjs.org/)
