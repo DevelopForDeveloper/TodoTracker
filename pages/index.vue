@@ -27,24 +27,22 @@ const addOrUpdateTodo = () => {
     return
   }
 
+  const newTodo = {
+    id: editIndex.value === -1 ? Date.now() : editIndex.value,
+    item: todoItem.value,
+    priority: priority.value,
+    status: editIndex.value === -1 ? 'todo' : todoStore.todos.find(todo => todo.id === editIndex.value)?.status || 'todo'
+  }
+
   if (editIndex.value === -1) {
-    addTodo({
-      id: Date.now(), // unique ID
-      item: todoItem.value,
-      priority: priority.value,
-      status: 'todo'
-    })
+    addTodo(newTodo)
   } else {
-    updateTodo(editIndex.value, {
-      id: editIndex.value,
-      item: todoItem.value,
-      priority: priority.value,
-      status: todoStore.todos.find(todo => todo.id === editIndex.value)?.status || 'todo'
-    })
+    updateTodo(editIndex.value, newTodo)
   }
 
   toggleInput()
 }
+
 
 // Pure function to add a todo
 const addTodo = (todo: { id: number, item: string, priority: string, status: string }) => {
@@ -121,21 +119,44 @@ watchEffect(() => {
   console.log('Todos:', todos.value)
 })
 
-// Handle drag and drop change event
 const onDragChange = (evt) => {
   const todoStore = useTodoStore()
   debugger
-  const { moved, added, removed } = evt
-  if (moved || added || removed) {
-    const fromStatus = removed ? removed.element.status : moved.oldIndex < added.newIndex ? added.element.status : null
-    const toStatus = added ? added.element.status : moved.oldIndex > added.newIndex ? added.element.status : null
-    console.log({fromStatus})
+
+  if (evt.moved) {
+    const movedElement = evt.moved.element;
+    const oldIndex = evt.moved.oldIndex;
+    const newIndex = evt.moved.newIndex;
+    const fromStatus = evt.from.getAttribute('data-status');
+    const toStatus = evt.to.getAttribute('data-status');
+
+    console.log({ movedElement, oldIndex, newIndex, fromStatus, toStatus });
+
     if (fromStatus && toStatus && fromStatus !== toStatus) {
-      const id = added ? added.element.id : moved.element.id
-      todoStore.updateTodoStatus(id, toStatus)
+      todoStore.updateTodoStatus(movedElement.id, toStatus);
+    }
+  } else if (evt.added) {
+    const addedElement = evt.added.element;
+    const toStatus = evt.to.getAttribute('data-status');
+
+    console.log({ addedElement, toStatus });
+
+    if (toStatus) {
+      todoStore.updateTodoStatus(addedElement.id, toStatus);
+    }
+  } else if (evt.removed) {
+    const removedElement = evt.removed.element;
+    const fromStatus = evt.from.getAttribute('data-status');
+
+    console.log({ removedElement, fromStatus });
+
+    if (fromStatus) {
+      todoStore.updateTodoStatus(removedElement.id, fromStatus);
     }
   }
 }
+
+
 
 // Use Nuxt lifecycle hook to ensure client-side execution
 onMounted(() => {
@@ -169,7 +190,7 @@ onMounted(() => {
       <div class="kanban-column" data-status="todo">
         <h2>Todo</h2>
         <client-only>
-          <draggable :list="todos.todo" :group="{ name: 'todos', pull: 'clone', put: false }" @change="onDragChange">
+          <draggable :list="todos.todo" :group="todos" @change="onDragChange">
             <template #item="{ element }">
               <div class="kanban-item">
                 {{ element.item }} - {{ element.priority }}
@@ -183,7 +204,7 @@ onMounted(() => {
       <div class="kanban-column" data-status="inProgress">
         <h2>In Progress</h2>
         <client-only>
-          <draggable :list="todos.inProgress" group="todos" @change="onDragChange">
+          <draggable :list="todos.inProgress" :group="todos" @change="onDragChange">
             <template #item="{ element }">
               <div class="kanban-item">
                 {{ element.item }} - {{ element.priority }}
@@ -197,7 +218,7 @@ onMounted(() => {
       <div class="kanban-column" data-status="done">
         <h2>Done</h2>
         <client-only>
-          <draggable :list="todos.done" group="todos" @change="onDragChange">
+          <draggable :list="todos.done" :group="todos" @change="onDragChange">
             <template #item="{ element }">
               <div class="kanban-item">
                 {{ element.item }} - {{ element.priority }}
@@ -208,6 +229,9 @@ onMounted(() => {
           </draggable>
         </client-only>
       </div>
+         <rawDisplayer class="col-3" :value="todos.done" title="List 1" />
+
+    <rawDisplayer class="col-3" :value="list2" todos.inprogress="List 2" />
     </div>
   </div>
 </template>
