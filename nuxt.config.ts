@@ -5,4 +5,7 @@ export default defineNuxtConfig({
     // ...
     '@pinia/nuxt',
   ],
+  buildModules: [
+    '@nuxtjs/pinia'
+  ],
 })
